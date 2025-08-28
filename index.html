@@ -4,85 +4,174 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>놀젠 스튜디오</title>
-    <!-- 파비콘 로드 -->
     <link rel="icon" href="NolZen studio icon H.ico" type="image/x-icon">
-    <!-- Tailwind CSS CDN 로드 -->
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts - Inter 로드 -->
+    <!-- Google Fonts: Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        // Tailwind CSS configuration with custom theme and animations
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary-500': '#EF4444',
+                        'primary-600': '#DC2626',
+                        'primary-700': '#B91C1C',
+                        'gray-950': '#0A0A0A',
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                        'scale-in': 'scaleIn 0.3s ease-out forwards',
+                        'slide-down': 'slideDown 0.5s ease-out forwards',
+                        'slide-up': 'slideUp 0.5s ease-out forwards',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: 0, transform: 'translateY(20px)' },
+                            '100%': { opacity: 1, transform: 'translateY(0)' },
+                        },
+                        scaleIn: {
+                            '0%': { transform: 'scale(0.95)', opacity: 0 },
+                            '100%': { transform: 'scale(1)', opacity: 1 },
+                        },
+                        slideDown: {
+                            '0%': { transform: 'translateY(-100%)', opacity: 0 },
+                            '100%': { transform: 'translateY(0)', opacity: 1 },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(0)', opacity: 1 },
+                            '100%': { transform: 'translateY(-100%)', opacity: 0 },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        /* 기본 스타일 및 Inter 폰트 적용 */
+        /* Custom styles for body, sections, and navigation */
         body {
             font-family: 'Inter', sans-serif;
             scroll-behavior: smooth;
             @apply text-gray-800 bg-gray-50;
         }
-        /* 섹션 패딩 및 배경 */
         .section-padding {
-            @apply py-16 md:py-24;
+            @apply py-20 md:py-28;
         }
-        /* 컨테이너 중앙 정렬 (기본) */
         .container {
-            @apply max-w-6xl mx-auto px-4 sm:px-6 lg:px-8;
+            @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
         }
-        /* 스크롤 시 활성화되는 네비게이션 링크 스타일 */
         .nav-link.active {
-            @apply text-red-500 font-semibold;
+            @apply text-primary-500 font-semibold border-b-2 border-primary-500;
         }
-        /* 히어로 섹션 배경 이미지 */
         .hero-bg {
-            background-image: url('https://placehold.co/1920x1080/4A5568/FFFFFF?text=NolzenStudio'); /* 배경 이미지 URL, 필요에 따라 변경 */
+            background-image: url('https://placehold.co/1920x1080/4A5568/FFFFFF?text=NolzenStudio');
             background-size: cover;
-            background-position: top;
+            background-position: center;
         }
-
-        /* 탭 메뉴 - 선택된 탭 스타일 추가 */
         .tab-link.active-tab {
-            @apply bg-white border-red-500 text-red-500 shadow-sm; /* 선택된 탭의 배경, 테두리, 글자색 변경 */
+            @apply bg-white border-primary-500 text-primary-500 shadow-sm font-semibold;
         }
-        /* 아코디언 헤더 - 선택된 헤더 스타일 추가 */
         .accordion-header.active {
-            @apply bg-red-50 text-red-700; /* 선택된 아코디언 헤더의 배경 및 글자색 변경 */
+            @apply bg-primary-50 text-primary-700;
+        }
+        /* Mobile menu specific styles for animation */
+        #mobile-menu.hidden-menu {
+            animation: slideUp 0.5s ease-out forwards;
+        }
+        #mobile-menu.show-menu {
+            animation: slideDown 0.5s ease-out forwards;
+        }
+        /* Loading spinner animation */
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .spinner {
+            animation: spin 1s linear infinite;
         }
     </style>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5299872243240948"
-     crossorigin="anonymous"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5299872243240948" crossorigin="anonymous"></script>
 </head>
 <body class="antialiased">
-    <!-- 헤더 섹션 -->
-    <header class="bg-white shadow-md fixed w-full z-50 rounded-b-lg">
+    <!-- Header: Fixed navigation bar -->
+    <header class="bg-white shadow-lg fixed w-full z-50 transition-all duration-300" id="main-header">
         <div class="container flex justify-between items-center py-4">
-            <!-- 로고와 타이틀을 포함하는 h1 -->
-            <h1 class="text-3xl font-bold text-red-500 flex items-center">
-                <img src="NolZen studio icon H.jpg" alt="놀젠 스튜디오 로고" class="h-10 w-10 mr-3 rounded-full shadow-sm">
+            <h1 class="text-2xl sm:text-3xl font-bold text-primary-500 flex items-center">
+                <img src="NolZen studio icon H.jpg" alt="놀젠 스튜디오 로고" class="h-8 w-8 sm:h-10 sm:w-10 mr-2 sm:mr-3 rounded-full shadow-md">
                 놀젠 스튜디오
             </h1>
-            <nav>
-                <ul class="flex space-x-6">
-                    <li><a href="#about" class="nav-link text-gray-700 hover:text-red-500 transition duration-300 ease-in-out rounded-md p-2">회사 소개</a></li>
-                    <li><a href="#services" class="nav-link text-gray-700 hover:text-red-500 transition duration-300 ease-in-out rounded-md p-2">서비스</a></li>
-                    <li><a href="#portfolio" class="nav-link text-gray-700 hover:text-red-500 transition duration-300 ease-in-out rounded-md p-2">포트폴리오</a></li>
-                    <!--li><a href="#process" class="nav-link text-gray-700 hover:text-red-500 transition duration-300 ease-in-out rounded-md p-2">진행 절차</a></li-->
-                    <li><a href="#faq" class="nav-link text-gray-700 hover:text-red-500 transition duration-300 ease-in-out rounded-md p-2">자주 묻는 질문</a></li>
-                    <li><a href="#contact-modal" class="nav-link bg-red-500 text-white px-4 py-2 rounded-full hover:bg-red-600 transition duration-300 ease-in-out shadow-md">문의하기</a></li>
+            <!-- Desktop navigation -->
+            <nav class="hidden md:block">
+                <ul class="flex space-x-8">
+                    <li><a href="#about" class="nav-link text-gray-700 hover:text-primary-500 transition duration-300 ease-in-out py-2">회사 소개</a></li>
+                    <li><a href="#services" class="nav-link text-gray-700 hover:text-primary-500 transition duration-300 ease-in-out py-2">서비스</a></li>
+                    <li><a href="#portfolio" class="nav-link text-gray-700 hover:text-primary-500 transition duration-300 ease-in-out py-2">포트폴리오</a></li>
+                    <li><a href="#faq" class="nav-link text-gray-700 hover:text-primary-500 transition duration-300 ease-in-out py-2">자주 묻는 질문</a></li>
                 </ul>
             </nav>
+            <a href="#contact-modal" class="bg-primary-500 text-white px-6 py-3 rounded-full hover:bg-primary-600 transition duration-300 ease-in-out shadow-md font-semibold hidden md:block">문의하기</a>
+            <!-- Mobile menu toggle button -->
+            <button id="menu-toggle" class="md:hidden text-gray-700 hover:text-primary-500 text-3xl focus:outline-none">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+        <!-- Mobile menu dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-md rounded-b-lg">
+            <ul class="flex flex-col items-center py-4 space-y-4">
+                <li><a href="#about" class="nav-link text-gray-700 hover:text-primary-500 transition duration-300 ease-in-out py-2">회사 소개</a></li>
+                <li><a href="#services" class="nav-link text-gray-700 hover:text-primary-500 transition duration-300 ease-in-out py-2">서비스</a></li>
+                <li><a href="#portfolio" class="nav-link text-gray-700 hover:text-primary-500 transition duration-300 ease-in-out py-2">포트폴리오</a></li>
+                <li><a href="#faq" class="nav-link text-gray-700 hover:text-primary-500 transition duration-300 ease-in-out py-2">자주 묻는 질문</a></li>
+                <li><a href="#contact-modal" class="nav-link bg-primary-500 text-white px-6 py-3 rounded-full hover:bg-primary-600 transition duration-300 ease-in-out shadow-md w-full text-center">문의하기</a></li>
+            </ul>
         </div>
     </header>
-
-    <main class="pt-20"> <!-- 헤더 높이만큼 패딩 추가 -->
-        <!-- 히어로 섹션 -->
+    
+    <!-- Main content area -->
+    <main class="pt-[84px]">
+        <!-- Hero section with full screen background -->
         <section id="hero" class="hero-bg h-screen flex items-center justify-center text-center text-white relative">
-            <div class="absolute inset-0 bg-black opacity-50"></div>
-            <div class="relative z-10">
-                <h2 class="text-5xl md:text-6xl font-extrabold mb-4 animate-fade-in-up">놀젠 스튜디오</h2>
-                <p class="text-xl md:text-2xl mb-8 animate-fade-in-up delay-200">창의적인 디자인과 혁신적인 개발로 당신의 아이디어를 현실로 만듭니다.</p>
-                <a href="#services" class="bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105 animate-fade-in-up delay-400">서비스 알아보기</a>
+            <div class="absolute inset-0 bg-black opacity-60"></div>
+            <div class="relative z-10 px-4">
+                <h2 class="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-4 animate-fade-in-up">놀젠 스튜디오</h2>
+                <p class="text-xl sm:text-2xl md:text-3xl mb-8 font-light animate-fade-in-up delay-200">
+                    창의적인 디자인과 혁신적인 개발로 <br class="md:hidden">당신의 아이디어를 현실로 만듭니다.
+                </p>
+                <a href="#services" class="inline-block bg-primary-500 hover:bg-primary-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105 animate-fade-in-up delay-400">서비스 알아보기</a>
             </div>
         </section>
 
+        <!-- About section -->
+        <!--section id="about" class="section-padding bg-gray-50">
+            <div class="container">
+                <h2 class="text-3xl sm:text-4xl font-bold text-center mb-12 text-primary-500">회사 소개</h2>
+                <div class="grid md:grid-cols-2 gap-12 place-items-center">
+                    <div class="text-center md:text-left space-y-4">
+                        <p class="text-lg leading-relaxed">
+                            놀젠 스튜디오는 **모바일 앱, 모바일 게임, 소프트웨어 개발**과 함께 다양한 **디자인 서비스**를 제공하는 크리에이티브 스튜디오입니다.
+                        </p>
+                        <p class="text-lg leading-relaxed">
+                            고객의 비전을 깊이 이해하고, 최상의 결과물을 위해 열정적으로 작업합니다. 혁신적인 아이디어와 섬세한 기술력으로 당신의 프로젝트를 성공으로 이끌어 드립니다.
+                        </p>
+                        <p class="text-lg leading-relaxed">
+                            다양한 인쇄물 디자인부터 맞춤형 소프트웨어 개발까지, 놀젠 스튜디오와 함께하세요.
+                        </p>
+                    </div>
+                    <div class="flex justify-center">
+                        <img src="https://placehold.co/600x400/94A3B8/FFFFFF?text=About+Image" alt="놀젠 스튜디오 아이콘" class="rounded-2xl shadow-xl w-full max-w-sm transform transition-transform duration-500 hover:scale-105">
+                    </div>
+                </div>
+            </div>
+        </section-->
+
         <!-- 회사 소개 섹션 -->
-        <section id="about" class="section-padding bg-white">
+        <section id="about" class="section-padding bg-gray-50">
             <div class="container">
                 <h2 class="text-4xl font-bold text-center mb-12 text-red-500 pt-20">회사 소개</h2>
                 <div>
@@ -100,26 +189,32 @@
             </div>
         </section>
 
-        <!-- 서비스 상세 설명 섹션 -->
-        <section id="services" class="section-padding bg-white">
-            <div class="container">
-                <h2 class="text-4xl font-bold text-center mb-12 text-red-500 pt-20">서비스 상세 설명</h2>
-                <div class="flex justify-center mb-8">
-                    <button class="tab-link px-6 py-3 text-lg font-medium rounded-t-lg border-b-4 border-transparent hover:border-red-400 transition duration-300 ease-in-out" data-tab="tab-design">디자인 서비스</button>
-                    <button class="tab-link px-6 py-3 text-lg font-medium rounded-t-lg border-b-4 border-transparent hover:border-red-400 transition duration-300 ease-in-out" data-tab="tab-process-desc">디자인 진행 절차</button>
-                    <button class="tab-link px-6 py-3 text-lg font-medium rounded-t-lg border-b-4 border-transparent hover:border-red-400 transition duration-300 ease-in-out" data-tab="tab-development">개발 서비스</button>
+        <!-- Services section with tabbed interface -->
+        <section id="services" class="section-padding bg-gray-50">
+            <div class="container place-items-center">
+                <h2 class="text-3xl sm:text-4xl font-bold text-center mb-12 text-primary-500 pt-20">서비스 상세 설명</h2>
+                <div class="flex justify-center mb-8 flex-wrap gap-4">
+                    <button class="tab-link px-6 py-3 text-base sm:text-lg font-medium rounded-full border-2 border-transparent transition duration-300 ease-in-out hover:bg-gray-100" data-tab="tab-design">
+                        <i class="fas fa-paint-brush mr-2"></i>디자인 서비스
+                    </button>
+                    <button class="tab-link px-6 py-3 text-base sm:text-lg font-medium rounded-full border-2 border-transparent transition duration-300 ease-in-out hover:bg-gray-100" data-tab="tab-process-desc">
+                        <i class="fas fa-sync-alt mr-2"></i>진행 절차
+                    </button>
+                    <button class="tab-link px-6 py-3 text-base sm:text-lg font-medium rounded-full border-2 border-transparent transition duration-300 ease-in-out hover:bg-gray-100" data-tab="tab-development">
+                        <i class="fas fa-code mr-2"></i>개발 서비스
+                    </button>
                 </div>
 
-                <div id="tab-design" class="tab-content bg-white place-items-center active">
-                    <h3 class="text-3xl font-bold mb-6 text-gray-900">디자인</h3>
-                    <div class="grid md:grid-cols-2 place-items-center">
+                <div id="tab-design" class="tab-content bg-white p-8 md:p-12 rounded-2xl shadow-lg transition-all duration-500 ease-in-out transform scale-95 opacity-0">
+                    <h3 class="text-3xl font-bold mb-6 text-gray-900 text-center">디자인</h3>
+                    <div class="space-y-8">
                         <div>
-                            <h4 class="text-2xl font-semibold mb-4 text-red-500">명함 디자인 및 제작</h4>
-                            <ul class="list-disc list-inside text-lg space-y-2">
+                            <p class="text-2xl font-semibold mb-2 text-primary-500">명함 디자인 및 제작</p>
+                            <ul class="list-disc list-inside text-lg space-y-2 text-gray-700">
                                 <li>맞춤형 디자인으로 고객의 의견을 최대한 반영합니다.</li>
                                 <li>**디자인 비용**: 단면 5,000원, 양면 10,000원</li>
                                 <li>**제작 비용 (기본 종이, 90x50mm)**:
-                                    <ul class="list-circle list-inside ml-6">
+                                    <ul class="list-circle list-inside ml-6 mt-2 space-y-1">
                                         <li>200매: 30,000원</li>
                                         <li>600매: 80,000원</li>
                                         <li>1,000매: 120,000원</li>
@@ -128,115 +223,118 @@
                                 <li>시안 2종 제시 후 1종 선택, 수정 3회 가능합니다.</li>
                                 <li>재생산 시 간단한 수정은 디자인 비용이 무료입니다.</li>
                             </ul>
-                            <p class="text-sm text-gray-600 mt-4">**주의사항**: 인쇄 비용은 용지, 재질, 사이즈, 후가공에 따라 달라질 수 있습니다.</p>
+                            <p class="text-sm text-gray-500 mt-4">
+                                **주의사항**: 인쇄 비용은 용지, 재질, 사이즈, 후가공에 따라 달라질 수 있습니다.
+                            </p>
                         </div>
                         <div>
-                            <h4 class="text-2xl font-semibold mb-4 text-red-500">그 외 디자인</h4>
-                            <ul class="list-disc list-inside text-lg space-y-2">
+                            <h4 class="text-2xl font-semibold mb-4 text-primary-500">그 외 디자인</h4>
+                            <ul class="list-disc list-inside text-lg space-y-2 text-gray-700">
                                 <li>**대상**: 전단지, 리플렛, 엽서(초대장, 청첩장), 스티커, 책자 디자인</li>
                                 <li>글자 위주의 간단한 책, 날개가 없는 책표지도 진행합니다.</li>
                                 <li>원할 경우 즉시 인쇄 가능한 PDF 파일로 전달됩니다.</li>
                             </ul>
-                            <p class="text-sm text-gray-600 mt-4">**주의사항**: 책자 디자인 시 필요한 삽화나 이미지는 고객이 직접 제공해야 하며, 저작권 문제는 고객에게 책임이 있습니다.</p>
+                            <p class="text-sm text-gray-500 mt-4">
+                                **주의사항**: 책자 디자인 시 필요한 삽화나 이미지는 고객이 직접 제공해야 하며, 저작권 문제는 고객에게 책임이 있습니다.
+                            </p>
                         </div>
+                    </div>                   
+                </div>
+
+                <div id="tab-development" class="tab-content bg-white p-8 md:p-12 rounded-2xl shadow-lg hidden transition-all duration-500 ease-in-out transform scale-95 opacity-0">
+                    <h3 class="text-3xl font-bold mb-6 text-gray-900 text-center">개발</h3>
+                    <div class="space-y-8">
+                        <p class="text-2xl font-semibold text-primary-500">모바일 앱, 모바일 게임, 소프트웨어 개발</p>
+                        <p class="text-lg text-gray-700">
+                            기획부터 개발, 런칭, 유지보수까지 모든 과정을 함께하며 고객의 비즈니스 목표 달성을 위한 최적의 솔루션을 제시합니다.
+                        </p>
+                        <ul class="list-disc list-inside text-lg space-y-2 text-gray-700">
+                            <li><i class="fab fa-apple mr-2 text-gray-500"></i><i class="fab fa-android mr-2 text-gray-500"></i>모바일 앱 개발: iOS, Android 네이티브 및 하이브리드 앱 개발</li>
+                            <li><i class="fas fa-gamepad mr-2 text-gray-500"></i>모바일 게임 개발: 다양한 장르의 모바일 게임 기획 및 개발</li>
+                            <li><i class="fas fa-desktop mr-2 text-gray-500"></i>소프트웨어 개발: 맞춤형 웹/데스크톱 소프트웨어 및 솔루션 개발</li>
+                        </ul>
                     </div>
                 </div>
 
-                <div id="tab-development" class="tab-content bg-white place-items-center hidden">
-                    <h3 class="text-3xl font-bold mb-6 text-gray-900">개발</h3>
-                    <div class="grid md:grid-rows-1 gap-8">
+                <div id="tab-process-desc" class="tab-content bg-white p-8 md:p-12 rounded-2xl shadow-lg hidden transition-all duration-500 ease-in-out transform scale-95 opacity-0">
+                    <h3 class="text-3xl font-bold mb-6 text-gray-900 text-center">진행 절차</h3>
+                    <div class="space-y-8">
                         <div>
-                            <p class="text-2xl font-semibold mb-4 text-red-500">모바일 앱, 모바일 게임, 소프트웨어 개발</p>
-                            <p class="text-lg">기획부터 개발, 런칭, 유지보수까지 모든 과정을 함께하며 고객의 비즈니스 목표 달성을 위한 최적의 솔루션을 제시합니다.</p>
-                            <ul class="list-disc list-inside text-lg mt-4 space-y-2">
-                                <li>**모바일 앱 개발**: iOS, Android 네이티브 및 하이브리드 앱 개발</li>
-                                <li>**모바일 게임 개발**: 다양한 장르의 모바일 게임 기획 및 개발</li>
-                                <li>**소프트웨어 개발**: 맞춤형 웹/데스크톱 소프트웨어 및 솔루션 개발</li>
+                            <p class="text-2xl font-semibold mb-2 text-primary-500">1. 상담 및 요구사항 정의</p>
+                            <ul class="list-disc list-inside text-lg space-y-2 text-gray-700">
+                                <li>명함, 전단지 등은 원고 내용, 재질, 수량, 희망 납기일 등 상세 정보가 필요합니다.</li>
+                                <li>고객의 요구 조건을 충분히 상담한 후 작업에 착수합니다.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <p class="text-2xl font-semibold mb-2 text-primary-500">2. 선불 결제</p>
+                            <ul class="list-disc list-inside text-lg space-y-2 text-gray-700">
+                                <li>모든 인쇄물은 상담 후 선불 결제가 완료되어야 초안 작업이 진행됩니다.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <p class="text-2xl font-semibold mb-2 text-primary-500">3. 초안 작업 및 1차 시안 제시</p>
+                            <ul class="list-disc list-inside text-lg space-y-2 text-gray-700">
+                                <li>결제 확인 후 디자인 초안 작업에 착수하며, 1차 시안을 제시합니다.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <p class="text-2xl font-semibold mb-2 text-primary-500">4. 수정 및 피드백 (3회)</p>
+                            <ul class="list-disc list-inside text-lg space-y-2 text-gray-700">
+                                <li>1차 시안 이후 3회까지 부분 수정 및 오탈자 확인이 가능합니다.</li>
+                                <li>전면 수정 시 추가 금액이 발생하니, 시안 요청 시 최대한 자세한 요구사항을 전달해주세요.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <p class="text-2xl font-semibold mb-2 text-primary-500">5. 최종 승인 및 제작/전달</p>
+                            <ul class="list-disc list-inside text-lg space-y-2 text-gray-700">
+                                <li>고객의 최종 승인 후에만 인쇄 제작이 진행됩니다.</li>
+                                <li>완성된 작업물은 고객에게 안전하게 전달됩니다.</li>
                             </ul>
                         </div>
                     </div>
-                </div>
-
-                <div id="tab-process-desc" class="tab-content bg-white place-items-center hidden">
-                    <h3 class="leading-relaxed text-3xl font-bold mb-6 text-gray-900">진행 절차</h3>
-                    <div class="grid md:grid-rows-5 gap-8">
-                        <div>
-                            <p class="text-2xl font-semibold mb-4 text-red-500">상담 및 요구사항 정의</p>
-                            <ul class="list-disc list-inside text-lg mt-4 space-y-2">
-                                <li>명함, 전단지 등의 경우 원고 내용(양면/단면), 재질, 두께, 코팅 여부, 수량, 희망 납기일 등 상세 정보를 전달해야 합니다.</li>
-                                <li>모든 작업은 클라이언트가 원하시는 요구 조건을 충분히 상담한 후 디자인 작업에 착수합니다.</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <p class="text-2xl font-semibold mb-4 text-red-500">선불 결제</p>
-                            <ul class="list-disc list-inside text-lg mt-4 space-y-2">
-                                <li>모든 인쇄물은 상담이 진행된 후, 선불 완료되면 초안 작업이 진행됩니다.</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <p class="text-2xl font-semibold mb-4 text-red-500">초안 작업 및 1차 시안 제시</p>
-                            <ul class="list-disc list-inside text-lg mt-4 space-y-2">
-                                <li>결제 확인 후 디자인 초안 작업에 착수합니다.</li>
-                                <li>1차 시안을 제시합니다.</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <p class="text-2xl font-semibold mb-4 text-red-500">수정 및 피드백 (3회)</p>
-                            <ul class="list-disc list-inside text-lg mt-4 space-y-2">
-                                <li>요청에 의한 1차 시안이 나온 후, 3회까지 부분적으로 수정과 교정, 오탈자 확인이 가능합니다.</li>
-                                <li>전면 수정을 원하시면 새로운 추가금액이 발생하므로, 시안 요청 시 최대한 원하는 사항을 전달해 주시기 바랍니다.</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <p class="text-2xl font-semibold mb-4 text-red-500">최종 승인 및 제작/전달</p>
-                            <ul class="list-disc list-inside text-lg mt-4 space-y-2">
-                                <li>인쇄 제작 진행은 반드시 선불 완료와 의뢰하신 분의 승인이 확인되어야 진행합니다.</li>
-                                <li>완성된 작업물은 고객에게 전달됩니다.</li>
-                            </ul>
-                        </div>   
-                    </div>                 
                 </div>
             </div>
         </section>
 
-        <!-- 대표 작업물 섹션 -->
-        <section id="portfolio" class="section-padding bg-white">
-            <div class="container">
-                <h2 class="text-4xl font-bold text-center mb-12 text-red-500 pt-20">포트폴리오</h2>
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 pl-10">
-                    <div class="portfolio-item relative overflow-hidden rounded-xl shadow-lg group cursor-pointer">
-                        <img src="NolZen studio icon H.jpg" alt="명함 디자인" class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105 rounded-xl">
-                        <div class="portfolio-overlay absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl">
+        <!-- Portfolio section with interactive items -->
+        <section id="portfolio" class="section-padding bg-gray-50">
+            <div class="container justify-center">
+                <h2 class="text-3xl sm:text-4xl font-bold text-center mb-12 text-primary-500 pt-20">포트폴리오</h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 place-items-center">
+                    <div class="portfolio-item relative overflow-hidden rounded-2xl shadow-xl group cursor-pointer transform hover:scale-105 transition-transform duration-300">
+                        <img src="https://placehold.co/600x400/FF5733/FFFFFF?text=명함+디자인" alt="명함 디자인" class="w-full h-64 object-cover">
+                        <div class="portfolio-overlay absolute inset-0 bg-primary-500 bg-opacity-70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                             <span class="text-white text-2xl font-semibold">명함 디자인</span>
                         </div>
                     </div>
-                    <div class="portfolio-item relative overflow-hidden rounded-xl shadow-lg group cursor-pointer">
-                        <img src="NolZen studio icon Y.jpg" alt="전단지 디자인" class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105 rounded-xl">
-                        <div class="portfolio-overlay absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl">
+                    <div class="portfolio-item relative overflow-hidden rounded-2xl shadow-xl group cursor-pointer transform hover:scale-105 transition-transform duration-300">
+                        <img src="https://placehold.co/600x400/33FF57/FFFFFF?text=전단지+디자인" alt="전단지 디자인" class="w-full h-64 object-cover">
+                        <div class="portfolio-overlay absolute inset-0 bg-primary-500 bg-opacity-70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                             <span class="text-white text-2xl font-semibold">전단지 디자인</span>
                         </div>
                     </div>
-                    <div class="portfolio-item relative overflow-hidden rounded-xl shadow-lg group cursor-pointer">
-                        <img src="https://placehold.co/600x400/FFD700/000000?text=리플렛+디자인" alt="리플렛 디자인" class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105 rounded-xl">
-                        <div class="portfolio-overlay absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl">
+                    <div class="portfolio-item relative overflow-hidden rounded-2xl shadow-xl group cursor-pointer transform hover:scale-105 transition-transform duration-300">
+                        <img src="https://placehold.co/600x400/5733FF/FFFFFF?text=리플렛+디자인" alt="리플렛 디자인" class="w-full h-64 object-cover">
+                        <div class="portfolio-overlay absolute inset-0 bg-primary-500 bg-opacity-70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                             <span class="text-white text-2xl font-semibold">리플렛 디자인</span>
                         </div>
                     </div>
-                    <div class="portfolio-item relative overflow-hidden rounded-xl shadow-lg group cursor-pointer">
-                        <img src="https://placehold.co/600x400/87CEEB/000000?text=모바일+앱+개발" alt="모바일 앱 개발" class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105 rounded-xl">
-                        <div class="portfolio-overlay absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl">
+                    <div class="portfolio-item relative overflow-hidden rounded-2xl shadow-xl group cursor-pointer transform hover:scale-105 transition-transform duration-300">
+                        <img src="https://placehold.co/600x400/87CEEB/000000?text=모바일+앱+개발" alt="모바일 앱 개발" class="w-full h-64 object-cover">
+                        <div class="portfolio-overlay absolute inset-0 bg-primary-500 bg-opacity-70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                             <span class="text-white text-2xl font-semibold">모바일 앱 개발</span>
                         </div>
                     </div>
-                    <div class="portfolio-item relative overflow-hidden rounded-xl shadow-lg group cursor-pointer">
-                        <img src="https://placehold.co/600x400/90EE90/000000?text=모바일+게임+개발" alt="모바일 게임 개발" class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105 rounded-xl">
-                        <div class="portfolio-overlay absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl">
+                    <div class="portfolio-item relative overflow-hidden rounded-2xl shadow-xl group cursor-pointer transform hover:scale-105 transition-transform duration-300">
+                        <img src="https://placehold.co/600x400/90EE90/000000?text=모바일+게임+개발" alt="모바일 게임 개발" class="w-full h-64 object-cover">
+                        <div class="portfolio-overlay absolute inset-0 bg-primary-500 bg-opacity-70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                             <span class="text-white text-2xl font-semibold">모바일 게임 개발</span>
                         </div>
                     </div>
-                    <div class="portfolio-item relative overflow-hidden rounded-xl shadow-lg group cursor-pointer">
-                        <img src="https://placehold.co/600x400/DDA0DD/000000?text=소프트웨어+개발" alt="소프트웨어 개발" class="w-full h-64 object-cover transition-transform duration-300 group-hover:opacity-100 rounded-xl">
-                        <div class="portfolio-overlay absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl">
+                    <div class="portfolio-item relative overflow-hidden rounded-2xl shadow-xl group cursor-pointer transform hover:scale-105 transition-transform duration-300">
+                        <img src="https://placehold.co/600x400/DDA0DD/000000?text=소프트웨어+개발" alt="소프트웨어 개발" class="w-full h-64 object-cover">
+                        <div class="portfolio-overlay absolute inset-0 bg-primary-500 bg-opacity-70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                             <span class="text-white text-2xl font-semibold">소프트웨어 개발</span>
                         </div>
                     </div>
@@ -244,169 +342,193 @@
             </div>
         </section>
 
-        <!-- 자주 묻는 질문 섹션 -->
+        <!-- FAQ section with accordion -->
         <section id="faq" class="section-padding bg-gray-50">
-            <div class="container">
-                <h2 class="text-4xl font-bold text-center mb-12 text-red-500 pt-20">자주 묻는 질문</h2>
-                <div class="max-w-3xl mx-auto">
-                    <div class="accordion-item bg-white rounded-lg shadow-md mb-4 overflow-hidden">
-                        <button class="accordion-header w-full text-left p-6 text-xl font-semibold text-gray-900 flex justify-between items-center hover:bg-gray-100 transition duration-300 ease-in-out">
+            <div class="container justify-center">
+                <h2 class="text-3xl sm:text-4xl font-bold text-center mb-12 text-primary-500 pt-20">자주 묻는 질문</h2>
+                <div class="max-w-4xl mx-auto space-y-4">
+                    <div class="accordion-item bg-gray-50 rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl">
+                        <button class="accordion-header w-full text-left p-6 text-xl font-semibold text-gray-900 flex justify-between items-center transition duration-300 ease-in-out">
                             서비스 견적은 어떻게 산정되나요?
-                            <span class="accordion-icon text-2xl transform transition-transform duration-300">+</span>
+                            <span class="accordion-icon text-3xl transform transition-transform duration-300">+</span>
                         </button>
                         <div class="accordion-content p-6 border-t border-gray-200 hidden">
-                            <p class="text-lg leading-relaxed">다양한 조건을 참고하여 적정하고 신중하게 견적을 내드립니다.</p>
+                            <p class="text-lg leading-relaxed text-gray-700">다양한 조건을 참고하여 적정하고 신중하게 견적을 내드립니다.</p>
                         </div>
                     </div>
-                    <div class="accordion-item bg-white rounded-lg shadow-md mb-4 overflow-hidden">
-                        <button class="accordion-header w-full text-left p-6 text-xl font-semibold text-gray-900 flex justify-between items-center hover:bg-gray-100 transition duration-300 ease-in-out">
+                    <div class="accordion-item bg-gray-50 rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl">
+                        <button class="accordion-header w-full text-left p-6 text-xl font-semibold text-gray-900 flex justify-between items-center transition duration-300 ease-in-out">
                             A/S 또는 환불 규정은 어떻게 되나요?
-                            <span class="accordion-icon text-2xl transform transition-transform duration-300">+</span>
+                            <span class="accordion-icon text-3xl transform transition-transform duration-300">+</span>
                         </button>
                         <div class="accordion-content p-6 border-t border-gray-200 hidden">
-                            <p class="text-lg leading-relaxed mb-2"><strong>A/S</strong>: 스튜디오 측의 확실한 실수(확인하지 못한 부분, 잘못 표기한 경우)는 재제작 해드립니다. 하지만 최종 시안 확인 후 고객님의 부주의로 일어난 문제는 책임지지 않습니다.</p>
-                            <p class="text-lg leading-relaxed"><strong>환불</strong>: 디자인 작업이 착수되고 난 후, 의뢰를 취소하실 경우 이미 1일이 지났다면 80%를 환불해 드리며, 시안이 1차라도 나왔다면 60%를 환불해 드립니다. 최종 시안 확인 후 취소는 환불되지 않습니다.</p>
+                            <p class="text-lg leading-relaxed mb-4 text-gray-700">
+                                <strong>A/S</strong>: 스튜디오 측의 확실한 실수(확인하지 못한 부분, 잘못 표기한 경우)는 재제작 해드립니다. 하지만 최종 시안 확인 후 고객님의 부주의로 일어난 문제는 책임지지 않습니다.
+                            </p>
+                            <p class="text-lg leading-relaxed text-gray-700">
+                                <strong>환불</strong>: 디자인 작업이 착수된 후 취소하실 경우, 1일이 지났다면 80%를 환불해 드리며, 시안이 1차라도 나왔다면 60%를 환불해 드립니다. 최종 시안 확인 후 취소는 환불되지 않습니다.
+                            </p>
                         </div>
                     </div>
-                    <div class="accordion-item bg-white rounded-lg shadow-md mb-4 overflow-hidden">
-                        <button class="accordion-header w-full text-left p-6 text-xl font-semibold text-gray-900 flex justify-between items-center hover:bg-gray-100 transition duration-300 ease-in-out">
+                    <div class="accordion-item bg-gray-50 rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl">
+                        <button class="accordion-header w-full text-left p-6 text-xl font-semibold text-gray-900 flex justify-between items-center transition duration-300 ease-in-out">
                             작업물 원본 파일도 받을 수 있나요?
-                            <span class="accordion-icon text-2xl transform transition-transform duration-300">+</span>
+                            <span class="accordion-icon text-3xl transform transition-transform duration-300">+</span>
                         </button>
                         <div class="accordion-content p-6 border-t border-gray-200 hidden">
-                            <p class="text-lg leading-relaxed">기본적인 원본 파일은 제공하지 않습니다. 하지만 꼭 필요한 경우 가격 합의 후 수정 가능한 PDF 파일로 전달됩니다.</p>
+                            <p class="text-lg leading-relaxed text-gray-700">
+                                기본적인 원본 파일은 제공하지 않습니다. 하지만 꼭 필요한 경우 가격 합의 후 수정 가능한 PDF 파일로 전달됩니다.
+                            </p>
                         </div>
                     </div>
-                    <div class="accordion-item bg-white rounded-lg shadow-md mb-4 overflow-hidden">
-                        <button class="accordion-header w-full text-left p-6 text-xl font-semibold text-gray-900 flex justify-between items-center hover:bg-gray-100 transition duration-300 ease-in-out">
-                            완료한 서비스 중 대표적인 서비스는 무엇인가요? 소요 시간은 얼마나 소요 되었나요?
-                            <span class="accordion-icon text-2xl transform transition-transform duration-300">+</span>
-                        </button>
-                        <div class="accordion-content p-6 border-t border-gray-200 hidden">
-                            <p class="text-lg leading-relaxed">명함, 전단지, 리플렛, 포스터, 책자 등 다양한 서비스를 제공하고 있습니다. 디자인 소요 시간은 당일도 가능하며 원고의 양에 따라 기간이 상이합니다.</p>
-                        </div>
-                    </div>
-                    <div class="accordion-item bg-white rounded-lg shadow-md mb-4 overflow-hidden">
-                        <button class="accordion-header w-full text-left p-6 text-xl font-semibold text-gray-900 flex justify-between items-center hover:bg-gray-100 transition duration-300 ease-in-out">
+                    <div class="accordion-item bg-gray-50 rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl">
+                        <button class="accordion-header w-full text-left p-6 text-xl font-semibold text-gray-900 flex justify-between items-center transition duration-300 ease-in-out">
                             어떤 서비스를 전문적으로 제공하나요?
-                            <span class="accordion-icon text-2xl transform transition-transform duration-300">+</span>
+                            <span class="accordion-icon text-3xl transform transition-transform duration-300">+</span>
                         </button>
                         <div class="accordion-content p-6 border-t border-gray-200 hidden">
-                            <p class="text-lg leading-relaxed">명함, 전단지, 리플렛, 엽서, 스티커 디자인 및 제작을 전문적으로 제공하며, 인쇄 시 착불로 보내드립니다. 또한 모바일 앱, 모바일 게임, 소프트웨어 개발도 전문적으로 진행합니다.</p>
+                            <p class="text-lg leading-relaxed text-gray-700">
+                                명함, 전단지, 리플렛, 엽서, 스티커 디자인 및 제작을 전문적으로 제공하며, 인쇄 시 착불로 보내드립니다. 또한 모바일 앱, 모바일 게임, 소프트웨어 개발도 전문적으로 진행합니다.
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
+
+        <!-- Contact CTA section -->
+        <!--section id="contact" class="bg-gray-950 text-white py-20">
+            <div class="container text-center">
+                <h2 class="text-3xl sm:text-4xl font-bold mb-6 text-primary-500">준비되셨나요?</h2>
+                <p class="text-xl mb-10 text-gray-300">지금 바로 문의하여 당신의 아이디어를 현실로 만들어보세요.</p>
+                <a href="#contact-modal" class="bg-primary-500 text-white font-bold py-4 px-12 rounded-full shadow-lg hover:bg-primary-600 transition duration-300 ease-in-out transform hover:scale-105">
+                    문의하기
+                </a>
+            </div>
+        </section-->
     </main>
 
-    <!-- 푸터 섹션 -->
-    <footer class="bg-gray-900 text-white py-10 rounded-t-lg">
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-10 rounded-t-lg">
         <div class="container text-center">
-            <!-- 추가된 정보 -->
-            <p class="text-sm text-gray-400 mt-4">개인정보처리방침 | 사업자등록번호 : 213-12-99626 | 통신판매업 신고번호 : 2025-제주일도2-0029</p>
-            <p class="text-sm text-gray-400">주소: 제주도 제주시 고마로 9길 4</p>
-            <p class="text-lg mb-2">&copy; 2023 NolzenStudio. All rights reserved.</p>
-            <p class="text-md">상담시간: 평일 오전 10시부터 오후 4시까지</p>
-            <p class="text-sm text-gray-400 mt-2">주말은 기본적으로 휴무지만, 상담 가능합니다.</p>
-            <p class="text-sm text-gray-400">완료된 작업물은 고지 없이 포트폴리오로 이용될 수 있으며 디자인 저작권은 놀젠 스튜디오에 있습니다.</p>            
+            <p class="text-sm mb-2">개인정보처리방침 | 사업자등록번호 : 213-12-99626 | 통신판매업 신고번호 : 2025-제주일도2-0029</p>
+            <p class="text-sm mb-2">주소: 제주도 제주시 고마로 9길 4</p>
+            <p class="text-lg font-semibold text-gray-300 mb-2">&copy; 2023 NolzenStudio. All rights reserved.</p>
+            <p class="text-md font-medium text-gray-300">상담시간: 평일 오전 10시부터 오후 4시까지</p>
+            <p class="text-sm">주말은 기본적으로 휴무지만, 상담 가능합니다.</p>
+            <p class="text-sm mt-2">완료된 작업물은 고지 없이 포트폴리오로 이용될 수 있으며 디자인 저작권은 놀젠 스튜디오에 있습니다.</p>
         </div>
     </footer>
 
-    <!-- 문의하기 모달 팝업 -->
-    <div id="contact-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden p-4">
-        <div class="bg-white p-8 rounded-xl shadow-2xl w-full max-w-md relative animate-scale-in">
-            <button class="close-button absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-3xl font-bold">&times;</button>
-            <h2 class="text-3xl font-bold text-center mb-8 text-red-500">문의하기</h2>
-            <form id="contact-form" class="space-y-6">
-                <div>
-                    <label for="name" class="block text-lg font-medium text-gray-700 mb-2">이름:</label>
-                    <input type="text" id="name" name="name" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-red-500 focus:border-red-500 text-lg">
+    <!-- Contact Modal -->
+    <div id="contact-modal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-[100] hidden p-4">
+        <div class="bg-white p-8 rounded-3xl shadow-2xl w-full max-w-lg relative animate-scale-in">
+            <button class="close-button absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-4xl font-light leading-none">&times;</button>
+            <h2 class="text-3xl font-bold text-center mb-8 text-primary-500">문의하기</h2>
+            <!-- Contact form container -->
+            <div id="form-container">
+                <form id="contact-form" class="space-y-6">
+                    <div>
+                        <label for="name" class="block text-lg font-medium text-gray-700 mb-2">이름:</label>
+                        <input type="text" id="name" name="name" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-primary-500 focus:border-primary-500 text-lg">
+                    </div>
+                    <div>
+                        <label for="email" class="block text-lg font-medium text-gray-700 mb-2">이메일:</label>
+                        <input type="email" id="email" name="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-primary-500 focus:border-primary-500 text-lg">
+                    </div>
+                    <div>
+                        <label for="message" class="block text-lg font-medium text-gray-700 mb-2">메시지:</label>
+                        <textarea id="message" name="message" rows="5" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-primary-500 focus:border-primary-500 text-lg"></textarea>
+                    </div>
+                    <button type="submit" id="submit-button" class="w-full bg-primary-500 text-white font-bold py-4 rounded-full hover:bg-primary-600 transition duration-300 ease-in-out shadow-md text-lg">
+                        문의 전송
+                    </button>
+                </form>
+            </div>
+            <!-- Loading state container (initially hidden) -->
+            <div id="loading-message" class="hidden text-center">
+                <div class="text-primary-500 mb-4">
+                    <i class="fas fa-spinner fa-spin text-5xl"></i>
                 </div>
-                <div>
-                    <label for="email" class="block text-lg font-medium text-gray-700 mb-2">이메일:</label>
-                    <input type="email" id="email" name="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-red-500 focus:border-red-500 text-lg">
+                <p class="text-2xl font-semibold text-gray-800 mb-2">문의를 전송하는 중입니다...</p>
+                <p class="text-gray-600">잠시만 기다려주세요.</p>
+            </div>
+            <!-- Success message container (initially hidden) -->
+            <div id="success-message" class="hidden text-center">
+                <div class="text-green-500 mb-4">
+                    <i class="fas fa-check-circle text-5xl"></i>
                 </div>
-                <div>
-                    <label for="message" class="block text-lg font-medium text-gray-700 mb-2">메시지:</label>
-                    <textarea id="message" name="message" rows="5" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-red-500 focus:border-red-500 text-lg"></textarea>
-                </div>
-                <button type="submit" class="w-full bg-red-500 text-white font-bold py-3 rounded-full hover:bg-red-600 transition duration-300 ease-in-out shadow-md text-lg">문의 전송</button>
-            </form>
+                <p class="text-2xl font-semibold text-gray-800 mb-2">문의가 성공적으로 접수되었습니다!</p>
+                <p class="text-gray-600">최대한 빠르게 답변드리겠습니다.</p>
+            </div>
         </div>
     </div>
 
     <script>
-        // JavaScript for interactivity
         document.addEventListener('DOMContentLoaded', function() {
-            // 탭 메뉴 기능
+            // Function to handle tab clicks
             const tabLinks = document.querySelectorAll('.tab-link');
             const tabContents = document.querySelectorAll('.tab-content');
-
+            function showTab(targetId) {
+                tabLinks.forEach(item => item.classList.remove('active-tab', 'font-semibold'));
+                tabContents.forEach(item => {
+                    item.classList.add('hidden', 'scale-95', 'opacity-0');
+                });
+                const activeLink = document.querySelector(`[data-tab="${targetId}"]`);
+                const activeContent = document.getElementById(targetId);
+                if (activeLink) activeLink.classList.add('active-tab', 'font-semibold');
+                if (activeContent) activeContent.classList.remove('hidden');
+                setTimeout(() => {
+                    if (activeContent) {
+                        activeContent.classList.remove('scale-95', 'opacity-0');
+                    }
+                }, 10);
+            }
             tabLinks.forEach(link => {
                 link.addEventListener('click', function() {
-                    const targetId = this.getAttribute('data-tab');
-
-                    // 모든 탭 링크에서 active 클래스 제거
-                    tabLinks.forEach(item => item.classList.remove('active-tab'));
-                    // 모든 탭 콘텐츠 숨기기
-                    tabContents.forEach(item => item.classList.add('hidden'));
-
-                    // 클릭된 탭 링크에 active 클래스 추가
-                    this.classList.add('active-tab');
-                    // 해당 탭 콘텐츠 보이기
-                    document.getElementById(targetId).classList.remove('hidden');
+                    showTab(this.getAttribute('data-tab'));
                 });
             });
+            // Show the first tab by default
+            const initialTab = document.querySelector('.tab-link');
+            if(initialTab) showTab(initialTab.getAttribute('data-tab'));
 
-            // 초기 로드 시 첫 번째 탭 활성화 (디자인 서비스)
-            document.querySelector('.tab-link').click();
-
-            // 아코디언 메뉴 기능 (FAQ)
+            // Accordion menu functionality (FAQ)
             const accordionHeaders = document.querySelectorAll('.accordion-header');
-
             accordionHeaders.forEach(header => {
                 header.addEventListener('click', function() {
                     const content = this.nextElementSibling;
                     const icon = this.querySelector('.accordion-icon');
-
-                    // 현재 아코디언이 열려있는지 확인
                     const isActive = content.classList.contains('hidden');
 
-                    // 모든 아코디언 닫기
                     accordionHeaders.forEach(item => {
                         item.nextElementSibling.classList.add('hidden');
                         item.querySelector('.accordion-icon').textContent = '+';
-                        item.classList.remove('active'); // Tailwind CSS active state
+                        item.classList.remove('active');
                     });
 
-                    // 클릭된 아코디언 열기/닫기
                     if (isActive) {
                         content.classList.remove('hidden');
                         icon.textContent = '-';
-                        this.classList.add('active'); // Tailwind CSS active state
-                    } else {
-                        content.classList.add('hidden');
-                        icon.textContent = '+';
-                        this.classList.remove('active'); // Tailwind CSS active state
+                        this.classList.add('active');
                     }
                 });
             });
 
-            // 스크롤 시 헤더 네비게이션 활성화
+            // Header navigation active state on scroll
             const sections = document.querySelectorAll('section[id]');
             const navLinks = document.querySelectorAll('.nav-link');
+            const header = document.getElementById('main-header');
 
             window.addEventListener('scroll', () => {
                 let current = '';
                 sections.forEach(section => {
-                    const sectionTop = section.offsetTop - 100; // 헤더 높이 고려
+                    const sectionTop = section.offsetTop - header.offsetHeight - 50;
                     const sectionHeight = section.clientHeight;
                     if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
                         current = section.getAttribute('id');
                     }
                 });
-
                 navLinks.forEach(link => {
                     link.classList.remove('active');
                     if (link.getAttribute('href').includes(current)) {
@@ -415,34 +537,94 @@
                 });
             });
 
-            // 모달 팝업 기능
+            // Modal popup functionality
             const modal = document.getElementById('contact-modal');
-            const contactButton = document.querySelector('a[href="#contact-modal"]');
+            const formContainer = document.getElementById('form-container');
+            const loadingMessage = document.getElementById('loading-message');
+            const successMessage = document.getElementById('success-message');
+            const contactButtons = document.querySelectorAll('a[href="#contact-modal"]');
             const closeButton = document.querySelector('.close-button');
 
-            contactButton.addEventListener('click', (e) => {
-                e.preventDefault();
-                modal.classList.remove('hidden');
+            contactButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    modal.classList.remove('hidden');
+                    formContainer.classList.remove('hidden');
+                    loadingMessage.classList.add('hidden');
+                    successMessage.classList.add('hidden');
+                });
             });
-
             closeButton.addEventListener('click', () => {
                 modal.classList.add('hidden');
             });
-
-            // 모달 외부 클릭 시 닫기
             window.addEventListener('click', (e) => {
                 if (e.target === modal) {
                     modal.classList.add('hidden');
                 }
             });
 
-            // 폼 제출 시 알림 (실제 서버 연동 없음)
+            // Form submission handling (simulates an API call)
             const contactForm = document.getElementById('contact-form');
-            contactForm.addEventListener('submit', (e) => {
+            contactForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
-                alert('문의가 성공적으로 접수되었습니다. 최대한 빠르게 답변드리겠습니다.');
-                modal.classList.add('hidden');
-                contactForm.reset();
+
+                // 폼 데이터 수집
+                const formData = new FormData(contactForm);
+                const data = Object.fromEntries(formData.entries());
+
+                // 로딩 상태 표시
+                formContainer.classList.add('hidden');
+                loadingMessage.classList.remove('hidden');
+
+                try {
+                    // 실제 서버로 데이터를 전송하는 로직을 시뮬레이션
+                    // 실제 사용 시 이 부분을 fetch() 또는 axios 등으로 변경해야 합니다.
+                    await new Promise(resolve => setTimeout(resolve, 2000)); // 2초 대기 시뮬레이션
+
+                    // 성공 메시지 표시
+                    loadingMessage.classList.add('hidden');
+                    successMessage.classList.remove('hidden');
+
+                    // 폼 초기화
+                    contactForm.reset();
+
+                } catch (error) {
+                    console.error('문의 전송 실패:', error);
+                    // 실패 메시지 표시 (필요 시)
+                    loadingMessage.classList.add('hidden');
+                    formContainer.classList.remove('hidden');
+                    // 이 부분에 실패 메시지를 사용자에게 보여주는 UI를 추가할 수 있습니다.
+                }
+            });
+
+            // Mobile menu toggle with animation
+            const menuToggle = document.getElementById('menu-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+            menuToggle.addEventListener('click', () => {
+                const isHidden = mobileMenu.classList.contains('hidden');
+                if (isHidden) {
+                    mobileMenu.classList.remove('hidden', 'hidden-menu');
+                    mobileMenu.classList.add('show-menu');
+                } else {
+                    mobileMenu.classList.remove('show-menu');
+                    mobileMenu.classList.add('hidden-menu');
+                    setTimeout(() => {
+                        mobileMenu.classList.add('hidden');
+                    }, 500); // Wait for the animation to finish before hiding
+                }
+            });
+
+            // Smooth scroll for nav links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                    if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+                         mobileMenu.classList.add('hidden');
+                    }
+                });
             });
         });
     </script>
