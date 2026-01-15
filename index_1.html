@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Nolgen Studio - 클론 (HTML 버전)</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg: #ffffff;
+      --surface: #ffffff;
+      --text: #111827;
+      --muted: #6b7280;
+      --accent: #6366f1; /* 보라계 포인트 */
+      --btn-text-on-accent: #fff;
+      --radius: 12px;
+      --container-max: 1200px;
+    }
+    :root[data-theme="dark"]{
+      --bg: #0b0b0d;
+      --surface: #0f1113;
+      --text: #f8fafc;
+      --muted: #9ca3af;
+      --accent: #6366f1;
+      --btn-text-on-accent: #fff;
+    }
+
+    /* Reset & base */
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background:var(--bg);
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.5;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Scrollbar (custom) */
+    ::-webkit-scrollbar{width:10px;height:10px}
+    ::-webkit-scrollbar-track{background:transparent}
+    ::-webkit-scrollbar-thumb{
+      background: rgba(100,100,100,0.18);
+      border-radius: 10px;
+      border: 2px solid transparent;
+      background-clip: padding-box;
+    }
+    :root[data-theme="dark"] ::-webkit-scrollbar-thumb{
+      background: rgba(200,200,200,0.12);
+    }
+
+    /* Layout */
+    .container{max-width:var(--container-max);margin:0 auto;padding:0 24px}
+    header{
+      height:72px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      position:sticky;
+      top:0;
+      z-index:40;
+      background:linear-gradient(180deg, rgba(255,255,255,0.6), transparent);
+      backdrop-filter: blur(6px);
+    }
+    :root[data-theme="dark"] header{
+      background: linear-gradient(180deg, rgba(11,11,13,0.6), transparent);
+    }
+    .nav{
+      display:flex;
+      gap:18px;
+      align-items:center;
+    }
+    .logo{font-weight:800;font-size:18px;letter-spacing:-0.02em}
+    nav a{
+      color:var(--text);
+      text-decoration:none;
+      font-weight:500;
+      font-size:15px;
+      opacity:0.9;
+    }
+    nav a:hover{opacity:1;text-decoration:underline}
+
+    /* Hero */
+    .hero{
+      padding:56px 0 120px;
+      display:flex;
+      align-items:flex-start;
+      min-height:60vh;
+    }
+    .hero-left{flex:1; padding-top:14px}
+    .eyebrow{font-size:14px;color:var(--muted); margin-bottom:10px}
+    h1{
+      margin:0;
+      font-size:48px;
+      line-height:1.02;
+      font-weight:800;
+      letter-spacing:-0.02em;
+    }
+    p.lead{
+      margin-top:18px;
+      font-size:18px;
+      color:var(--muted);
+      max-width:680px;
+    }
+    .cta{margin-top:26px; display:flex; gap:12px; align-items:center}
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding:12px 18px;
+      border-radius:10px;
+      font-weight:600;
+      cursor:pointer;
+      border:0;
+      transition: transform .14s ease, box-shadow .14s ease;
+      box-shadow: 0 6px 18px rgba(16,24,40,0.06);
+    }
+    .btn:active{transform:translateY(1px)}
+    .btn.primary{
+      background:linear-gradient(90deg,var(--accent), #4f46e5);
+      color:var(--btn-text-on-accent);
+    }
+    .btn.ghost{
+      background:transparent;
+      border: 1px solid rgba(0,0,0,0.06);
+      color:var(--text);
+    }
+    :root[data-theme="dark"] .btn.ghost{
+      border:1px solid rgba(255,255,255,0.06);
+    }
+
+    /* Right image/visual (placeholder) */
+    .hero-right{
+      width:48%;
+      min-width:320px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      padding-left:40px;
+    }
+    .visual{
+      width:100%;
+      max-width:520px;
+      height:320px;
+      border-radius:18px;
+      background:linear-gradient(135deg, rgba(99,102,241,0.12), rgba(99,102,241,0.04));
+      border: 1px solid rgba(99,102,241,0.06);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:var(--accent);
+      font-weight:700;
+      font-size:20px;
+      box-shadow: 0 18px 40px rgba(16,24,40,0.08);
+    }
+
+    /* Sections */
+    section.features{padding:60px 0}
+    .features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+    .card{
+      padding:20px;
+      border-radius:14px;
+      background:linear-gradient(180deg, rgba(0,0,0,0.02), transparent);
+      border: 1px solid rgba(0,0,0,0.04);
+    }
+    :root[data-theme="dark"] .card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+      border: 1px solid rgba(255,255,255,0.03);
+    }
+
+    footer{padding:40px 0;color:var(--muted);font-size:14px}
+
+    /* responsive */
+    @media (max-width:1024px){
+      h1{font-size:42px}
+      .hero-right{display:none}
+      .features-grid{grid-template-columns:repeat(2,1fr)}
+    }
+    @media (max-width:640px){
+      header{padding:0 12px}
+      .hero{padding:44px 0 80px}
+      .container{padding:0 16px}
+      h1{font-size:32px}
+      .features-grid{grid-template-columns:1fr}
+      .logo{font-size:16px}
+      nav{display:none}
+    }
+
+    /* subtle entrance animations */
+    .reveal{opacity:0; transform:translateY(12px); transition:all .6s cubic-bezier(.2,.9,.3,1)}
+    .reveal.visible{opacity:1; transform:none}
+    .muted-small{font-size:13px;color:var(--muted)}
+    .theme-toggle{display:inline-flex;align-items:center;gap:8px;padding:8px;border-radius:999px;border:1px solid rgba(0,0,0,0.06);background:transparent;cursor:pointer}
+    :root[data-theme="dark"] .theme-toggle{border:1px solid rgba(255,255,255,0.06)}
+  </style>
+</head>
+<body>
+  <div id="app" data-theme="light">
+    <header class="container" role="banner" style="display:flex;align-items:center;">
+      <div style="display:flex;align-items:center;gap:18px;">
+        <div class="logo">Nolgen Studio</div>
+        <nav class="nav" aria-label="주 메뉴">
+          <a href="#home">홈</a>
+          <a href="#services">서비스</a>
+          <a href="#portfolio">포트폴리오</a>
+          <a href="#about">소개</a>
+          <a href="#blog">뉴스&블로그</a>
+          <a href="#contact">문의</a>
+        </nav>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:12px;">
+        <button id="themeBtn" class="theme-toggle" aria-label="다크모드 전환" title="테마 전환">
+          <svg id="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" style="display:inline-block">
+            <path d="M12 3v2M12 19v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4" stroke="#111827" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="12" cy="12" r="3" stroke="#111827" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <svg id="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" style="display:none">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="#f8fafc" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="muted-small" id="themeLabel">Light</span>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <!-- HERO -->
+      <section id="home" class="hero container" aria-labelledby="hero-title">
+        <div class="hero-left">
+          <div class="eyebrow reveal" style="transition-delay:.05s">크리에이티브 에이전시</div>
+          <h1 id="hero-title" class="reveal" style="transition-delay:.12s">크리에이티브로<br>브랜드를 변화시키다</h1>
+          <p class="lead reveal" style="transition-delay:.18s">
+            놀젠스튜디오는 혁신적인 디자인 솔루션으로 브랜드의 가치를 높이고,
+            사용자 경험을 극대화하는 크리에이티브 파트너입니다.
+          </p>
+
+          <div class="cta reveal" style="transition-delay:.26s">
+            <button class="btn primary" onclick="location.href='#portfolio'">포트폴리오 보기</button>
+            <button class="btn ghost" onclick="location.href='#contact'">프로젝트 문의</button>
+          </div>
+        </div>
+
+        <div class="hero-right reveal" style="transition-delay:.32s">
+          <div class="visual" role="img" aria-label="포트폴리오 대표 이미지">
+            Portfolio Visual
+          </div>
+        </div>
+      </section>
+
+      <!-- FEATURES -->
+      <section id="services" class="features container" aria-labelledby="services-title">
+        <h2 id="services-title" style="font-size:22px;margin-bottom:18px">서비스</h2>
+        <div class="features-grid">
+          <div class="card reveal" style="transition-delay:.10s">
+            <h3 style="margin:0 0 8px 0">브랜딩</h3>
+            <p class="muted-small">브랜드 전략부터 비주얼 아이덴티티까지 통합적인 브랜딩 솔루션.</p>
+          </div>
+          <div class="card reveal" style="transition-delay:.16s">
+            <h3 style="margin:0 0 8px 0">UI/UX 디자인</h3>
+            <p class="muted-small">사용자 중심 디자인으로 전환율과 만족도를 높입니다.</p>
+          </div>
+          <div class="card reveal" style="transition-delay:.22s">
+            <h3 style="margin:0 0 8px 0">디지털 프로덕트</h3>
+            <p class="muted-small">웹/모바일 인터랙티브 디자인 및 프로토타이핑.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- PORTFOLIO 간단 -->
+      <section id="portfolio" class="container" style="padding:40px 0">
+        <h2 style="font-size:22px;margin-bottom:18px">포트폴리오</h2>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
+          <div class="card reveal" style="padding:12px;min-height:140px">프로젝트 A</div>
+          <div class="card reveal" style="padding:12px;min-height:140px">프로젝트 B</div>
+          <div class="card reveal" style="padding:12px;min-height:140px">프로젝트 C</div>
+        </div>
+      </section>
+
+      <!-- ABOUT -->
+      <section id="about" class="container" style="padding:36px 0">
+        <h2 style="font-size:22px;margin-bottom:12px">소개</h2>
+        <p class="muted-small">우리는 스토리와 디자인을 결합해 브랜드의 목소리를 시각적으로 구현하는 팀입니다.</p>
+      </section>
+
+      <!-- CONTACT -->
+      <section id="contact" class="container" style="padding:36px 0 80px">
+        <h2 style="font-size:22px;margin-bottom:12px">문의</h2>
+        <form onsubmit="event.preventDefault(); alert('문의가 전송되었습니다 (데모)');" style="display:grid;gap:12px;max-width:640px">
+          <input type="text" placeholder="이름" required style="padding:12px;border-radius:10px;border:1px solid rgba(0,0,0,0.06);background:transparent;color:var(--text)"/>
+          <input type="email" placeholder="이메일" required style="padding:12px;border-radius:10px;border:1px solid rgba(0,0,0,0.06);background:transparent;color:var(--text)"/>
+          <textarea placeholder="메시지" rows="6" required style="padding:12px;border-radius:10px;border:1px solid rgba(0,0,0,0.06);background:transparent;color:var(--text)"></textarea>
+          <div style="display:flex;gap:12px;">
+            <button class="btn primary" type="submit">보내기</button>
+            <button type="reset" class="btn ghost">초기화</button>
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <footer class="container" role="contentinfo">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+        <div style="font-weight:600">Nolgen Studio</div>
+        <div style="color:var(--muted)">© 2025 Nolgen Studio. All rights reserved.</div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    (function(){
+      const app = document.getElementById('app');
+      const themeBtn = document.getElementById('themeBtn');
+      const themeLabel = document.getElementById('themeLabel');
+      const iconSun = document.getElementById('icon-sun');
+      const iconMoon = document.getElementById('icon-moon');
+
+      // 초기 테마 읽기(localStorage -> system -> light)
+      const saved = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      let theme = saved || (prefersDark ? 'dark' : 'light');
+      setTheme(theme);
+
+      themeBtn.addEventListener('click', () => {
+        theme = (app.getAttribute('data-theme') === 'dark') ? 'light' : 'dark';
+        localStorage.setItem('theme', theme);
+        setTheme(theme);
+      });
+
+      function setTheme(t){
+        app.setAttribute('data-theme', t);
+        document.documentElement.setAttribute('data-theme', t);
+        if(t === 'dark'){
+          themeLabel.textContent = 'Dark';
+          iconSun.style.display = 'none';
+          iconMoon.style.display = 'inline-block';
+        } else {
+          themeLabel.textContent = 'Light';
+          iconSun.style.display = 'inline-block';
+          iconMoon.style.display = 'none';
+        }
+      }
+
+      // 스크롤 기반 reveal (간단한)
+      const reveals = document.querySelectorAll('.reveal');
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if(e.isIntersecting){
+            e.target.classList.add('visible');
+            // 한번만 보여주려면 아래 주석 해제
+            // io.unobserve(e.target);
+          }
+        });
+      }, {threshold: 0.12});
+      reveals.forEach(r => io.observe(r));
+    })();
+  </script>
+</body>
+</html>
